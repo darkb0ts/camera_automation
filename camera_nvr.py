@@ -28,6 +28,7 @@ def get_local_ip():                          #get my local ip_address and remove
 
 def check_ip_is_live(ip_scan):
     scanner.scan(hosts=ip_scan, arguments='-sn')
+    print("-------------Live Ip address-------------")
     for ip in scanner.all_hosts():
         live_arr.append(ip)
         print(f"IP: {ip}")
@@ -50,10 +51,13 @@ def tab_navgation(driver,filtered_ips):    #open the all tab for camera ip addre
             driver.get(f"https://about.google/pagenotfound")
 
 def change_the_password(driver,filtered_ips):
+    print("-------------URL PAGE TITLE-------------")
     for z in range(len(filtered_ips)+1):
         driver.switch_to.window(driver.window_handles[z])
-        page_title = driver.title
-        print(f"Page Title: {page_title}")
+        if driver.title:
+            print(f"Page Title: {driver.title}")
+        else:
+            print("Page Title: Unknow")
         time.sleep(5)
     
     
