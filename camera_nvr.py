@@ -68,13 +68,14 @@ def main(password, new_password, gui_mode):
     driver = webdriver.Firefox(options=firefox_options)
     my_ip = get_local_ip()
     driver.maximize_window()
+    print(password, new_password)
     driver.get(f"http://google.com")
     tab_navgation(driver,my_ip)
     change_the_password(driver,my_ip)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Automatic change the camera password using Selenium')
-    parser.add_argument('-p', '--password', help='Current Password of Camera', required=True)
+    parser.add_argument('-op', '--password', help='Current Password of Camera', required=True)
     parser.add_argument('-np', '--new_password', help='New password of Camera', required=True)
     parser.add_argument('-no_gui', '--set_gui', action='store_true', help='Set GUI interface in browser')
     args = parser.parse_args()
