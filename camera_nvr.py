@@ -97,7 +97,7 @@ def main(password, new_password, gui_mode):
     edit_click=driver.find_element(By.ID,"btnModify")
     edit_click()
     time.sleep(3)
-    
+    #vaa da poda
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Automatic change the camera password using Selenium')
