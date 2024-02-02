@@ -1,7 +1,10 @@
 import argparse
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import socket
 import nmap 
 import ipaddress
@@ -50,7 +53,7 @@ def tab_navgation(driver,filtered_ips):    #open the all tab for camera ip addre
             driver.switch_to.window(driver.window_handles[count+1])
             driver.get(f"https://about.google/pagenotfound")
 
-def change_the_password(driver,filtered_ips):
+def change_the_tab(driver,filtered_ips):
     print("-------------URL PAGE TITLE-------------")
     for z in range(len(filtered_ips)+1):
         driver.switch_to.window(driver.window_handles[z])
@@ -59,19 +62,42 @@ def change_the_password(driver,filtered_ips):
         else:
             print("Page Title: Unknow")
         time.sleep(5)
+
+def change_the_password(driver,ip_network):
+    pass
+
     
     
 def main(password, new_password, gui_mode):
     firefox_options = Options()
+    ok=False
     if gui_mode:
         firefox_options.add_argument('--headless')
     driver = webdriver.Firefox(options=firefox_options)
-    my_ip = get_local_ip()
-    driver.maximize_window()
+    #my_ip = get_local_ip()
+    #driver.maximize_window()
     print(password, new_password)
-    driver.get(f"http://google.com")
-    tab_navgation(driver,my_ip)
-    change_the_password(driver,my_ip)
+    driver.get(f"http://192.168.5.210/")
+    #tab_navgation(driver,my_ip)
+    #change_the_tab(driver,my_ip)
+    #change_the_password(driver,122)
+    admin_login= driver.find_element(By.ID,"txtPassword")
+    time.sleep(3)
+    admin_login.send_keys('magdyn')
+    time.sleep(3)
+    admin_login.send_keys(Keys.ENTER)
+    time.sleep(3)
+    check_login=driver.find_element(By.ID,"mu_cfgHome")
+    check_login.click()
+    time.sleep(3)
+    # button=driver.find_element(By.ID,"mu_cfgHome")  user  btnModify
+    user_link = driver.find_element(By.LINK_TEXT, "User")
+    user_link.click()
+    time.sleep(3)
+    edit_click=driver.find_element(By.ID,"btnModify")
+    edit_click()
+    time.sleep(3)
+    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Automatic change the camera password using Selenium')
